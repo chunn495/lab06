@@ -38,6 +38,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *
      * think of what type of keys and values would best suit the requirements
      */
+    private final Map<String, Collection<U>> map = new HashMap<>();
 
     /*
      * [CONSTRUCTORS]
@@ -64,7 +65,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *            application
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
-        super(null, null, null, 0);
+        super(name, surname, user, userAge);
     }
 
     /*
@@ -78,7 +79,19 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+        if(this.map.containsKey(circle)){
+            if(this.map.get(circle).contains(user)) {
+                return false;
+            } else {
+                this.map.get(circle).add(user);
+                return true;
+            }
+
+        } else {
+            this.map.put(circle, new HashSet<>());
+            this.map.get(circle).add(user);
+            return true;
+        }
     }
 
     /**
@@ -88,11 +101,19 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+        if(this.map.containsKey(groupName)){
+            return new HashSet<>(this.map.get(groupName));
+        }
+        return new HashSet<>();
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+        List<U> list = new ArrayList<>();
+        for (Collection<U> u : map.values()){
+            list.addAll(u);
+        }
+        return list;
+
     }
 }

@@ -48,11 +48,12 @@ public final class TestSocialNetworkUser {
          *
          * * Adam Smith, asmith, (no age)
          */
-        final SocialNetworkUser<User> kbacon = null; //TODO
-        final SocialNetworkUser<User> dwashington = null; //TODO
-        final SocialNetworkUser<User> mgladwell = null; //TODO
-        final SocialNetworkUser<User> ntaleb = null; //TODO
-        final User asmith = null; //TODO
+        final SocialNetworkUser<User> kbacon = new SocialNetworkUserImpl<>("Kevin", "Bacon", "kbacon", 56); // TODO
+        final SocialNetworkUser<User> dwashington = new SocialNetworkUserImpl<>("Denze", "Washington", "dwashington",
+                59); // TODO
+        final SocialNetworkUser<User> mgladwell = new SocialNetworkUserImpl<>("Malcom", "Gladwell", "mgladwell", 51); // TODO
+        final SocialNetworkUser<User> ntaleb = new SocialNetworkUserImpl<>("Nicholas", "Talebb", "ntaleb", 54); // TODO
+        final User asmith = new UserImpl("Adam", "Smith", "asmith"); // TODO
         /*
          * Make people follow each other
          */
@@ -80,11 +81,9 @@ public final class TestSocialNetworkUser {
          * STILL TWO PEOPLE in denzel's group called writers
          */
         assertTrue(
-            "Denzel has STILL 2 followed people in group \"" + WRITERS + "\"",
-            dwashington.getFollowedUsersInGroup(WRITERS).size() == 2
-        );
+                "Denzel has STILL 2 followed people in group \"" + WRITERS + "\"",
+                dwashington.getFollowedUsersInGroup(WRITERS).size() == 2);
     }
-
     private static void assertTrue(final String message, final boolean value) {
         if (value) {
             IO.println("OK: " + message);

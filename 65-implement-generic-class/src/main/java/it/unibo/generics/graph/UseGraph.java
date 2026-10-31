@@ -1,8 +1,10 @@
 package it.unibo.generics.graph;
 
+import it.unibo.generics.graph.impl.GraphImpl;
 import it.unibo.generics.graph.api.Graph;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,7 +29,11 @@ public final class UseGraph {
         /*
          * Test your graph implementation(s) by calling testGraph
          */
-        testGraph(null);
+        final List<Graph<String>> graphs = List.of(new GraphImpl<>());
+        for(final Graph<String> graph : graphs){
+        testGraph(graph);
+
+        }
     }
 
     private static void testGraph(final Graph<String> graph) {
@@ -54,19 +60,21 @@ public final class UseGraph {
          * Either the path b,c,a or b,c,d,e,a
          */
         assertIsAnyOf(
-            graph.getPath(B, A),
-            Arrays.asList(B, C, A),
-            Arrays.asList(B, C, D, E, A)
-        );
+                graph.getPath(B, A),
+                Arrays.asList(B, C, A),
+                Arrays.asList(B, C, D, E, A));
     }
 
     private static void assertIsAnyOf(final Object actual, final Object... valid) {
-        for (final var target: Objects.requireNonNull(valid)) {
+        for (final var target : Objects.requireNonNull(valid)) {
             if (Objects.equals(target, actual)) {
                 IO.println("OK: " + actual + " matches " + target);
                 return;
             }
         }
         throw new AssertionError("None of " + Arrays.asList(valid) + " matches " + actual);
+    }
+    private static String[] splitOnwhiteSpace(final String target){
+        return target.split("\\s+");
     }
 }
